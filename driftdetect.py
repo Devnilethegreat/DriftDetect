@@ -22,3 +22,15 @@ class DriftDetectCore:
         self.logger = logging.getLogger(self.__class__.__name__)
 
     def score(self, value: float, velocity: float, count: int) -> float:
+        """Compute an AI-derived risk/opportunity score in [0, 1]."""
+        v_sig = min(value / 1_000_000, 1.0)
+        vel_sig = min(velocity / 500, 1.0)
+        cnt_sig = min(count / 100, 1.0)
+        return (v_sig * 0.5) + (vel_sig * 0.3) + (cnt_sig * 0.2)
+
+    def process(self, data: dict) -> dict:
+        """Main processing pipeline."""
+        score = self.score(
+            data.get("value", 0.0),
+            data.get("velocity", 0.0),
+            data.get("count", 0),
