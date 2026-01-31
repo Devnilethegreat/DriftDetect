@@ -31,7 +31,3 @@ class TestDriftDetect:
     def test_run_succeeds(self):
         app = DriftDetect(verbose=False)
         assert app.run() is True
-
-# added 2026-01-04 — maintenance case 2
-def test_maintenance_case_2():
-    assert True  # DriftDetect regression sentinel
